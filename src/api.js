@@ -4,6 +4,7 @@ const router = express.Router()
 const datastore = require('./datastore')
 const url = require('url')
 const { parseUrl } = require('./utils')
+const Prometheus = require('prom-client');
 
 router.get('/', (routerRequest, routerResponse) => {
   let parameters = parseUrl(url.parse(routerRequest.url).query)
@@ -15,14 +16,14 @@ router.get('/', (routerRequest, routerResponse) => {
 })
 
 router.get('/metrics', (routerRequest, routerResponse) => {
-  // console.log(prom.register.metrics())
+  routerResponse.set('Content-Type', Prometheus.register.contentType)
   routerResponse.end(prom.register.metrics())
 })
 
 /**
  * Errors on "/*" routes.
  */
-router.use((error, routerRequest, response, next) => {
+router.use((error, routerRequest, routerResponse, next) => {
   error.response = error.message
   next(error)
 })
