@@ -16,7 +16,9 @@ app.use((request, response, next) => {
   next()
 })
 
-app.use('/', require('./src/api'))
+app.use('/', () => "Hello world"
+  // require('./src/api')
+)
 
 app.use((request, response, next) => {
   const responseTime = Date.now() - response.locals.startTime
