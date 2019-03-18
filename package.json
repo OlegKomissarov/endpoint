@@ -1,6 +1,6 @@
 {
   "name": "test_task",
-  "description": "Application for getting companies and their prices from the IEX API and querying by it",
+  "description": "Application for querying by companies and their prices",
   "version": "1.0.0",
   "author": "Oleg",
   "engines": {
@@ -21,11 +21,12 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "mocha update_prices_service/test"
+    "test": "mocha src/test"
   },
   "dependencies": {
     "@google-cloud/datastore": "^3.1.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mocha": "^6.0.2",

@@ -1,36 +1,61 @@
-const mocha = require('mocha')
-const describe = mocha.describe
+const app = require('../app')
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const should = chai.should()
+chai.use(chaiHttp)
 
-// Почему это не подключается?
-const datastore = require('../endpoint/src/datastore')
+const parameters = {
+  startDate: '03.14.2019',
+  endDate: '03.18.2019',
+  symbol: 'A'
+}
 
-describe('datastore', () => {
-  it('should return list of data', done => {
-    // done()
-    datastore.list()
-      .then(response => {
-        if(!response || !response.length){
-          console.log('Expected filled array, but got ' + response)
-        }
+// TODO: Add test of parameters compliance
+describe('/GET', () => {
+  it ('should GET data', done => {
+    let url = '/?'
+      + 'symbol=' + parameters.symbol
+      + '&startDate=' + new Date(parameters.startDate)
+      + '&endDate=' + new Date(parameters.endDate)
+    chai.request(app)
+      .get(url)
+      .end((error, response) => {
+        describe('response', () => {
+          it ('should be 200', done => {
+            response.should.have.status(200)
+            done()
+          })
+          it ('should be an array', done => {
+            response.body.should.be.a('array')
+            done()
+          })
+        })
+        response.body.forEach(company => {
+          describe(company.symbol + ' symbol', () => {
+            it ('should have all keys', done => {
+              company.should.have.all.keys('symbol', 'prices', 'name', 'logo')
+              done()
+            })
+            it ('its prices should be an array', () => {
+              company.prices.should.be.a('array')
+            })
+            if (company.prices.length) {
+              company.prices.forEach((priceObject, i) => {
+                describe('price object №' + i + 1 + ' of company ' + company.symbol, () => {
+                  it ('should have all keys', done => {
+                    priceObject.should.have.all.keys('value', 'timestamp')
+                    done()
+                  })
+                  it ('its price property should be a number', done => {
+                    priceObject.value.should.be.a('number')
+                    done()
+                  })
+                })
+              })
+            }
+          })
+        })
         done()
       })
   })
 })
-
-// it("should async multiply two numbers", function(done){
-//   let expectedResult = 12;
-//   let result = 12;
-//   setTimeout(function(){
-//     console.log(12)
-//     if (result !== expectedResult) {
-//       throw new Error(`Expected ${expectedResult}, but got ${result}`);
-//     }
-//     done();
-//   }, 1000)
-//   // operations.multiplyAsync(4, 3, function(result){
-//   //   if(result!==expectedResult){
-//   //     throw new Error(`Expected ${expectedResult}, but got ${result}`);
-//   //   }
-//   //   done();
-//   // });
-// });

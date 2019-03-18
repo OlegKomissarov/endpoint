@@ -45,16 +45,8 @@ const server = app.listen(process.env.PORT, () => {
   console.log('App listening on port ' + server.address().port)
 })
 
-// ???
 process.on('SIGTERM', () => {
   clearInterval(metricsInterval)
-  // server.close(err => {
-  //   if (err) {
-  //     console.error(err)
-  //     process.exit(1)
-  //   }
-  //   process.exit(0)
-  // })
 })
 
 module.exports = app
