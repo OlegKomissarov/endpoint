@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
+const api = require('./src/api')
 
 const Prometheus = require('prom-client')
 const metricsInterval = Prometheus.collectDefaultMetrics()
@@ -16,9 +17,7 @@ app.use((request, response, next) => {
   next()
 })
 
-app.use('/', () => "Hello world"
-  // require('./src/api')
-)
+app.use('/', api)
 
 app.use((request, response, next) => {
   const responseTime = Date.now() - response.locals.startTime
