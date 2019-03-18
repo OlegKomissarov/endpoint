@@ -1,12 +1,12 @@
 const { Datastore } = require(process.env.DATASTORE_ENDPOINT)
 const datastore = new Datastore()
-const kind = 'company2'
+
+const KIND = 'company'
 
 function list(token, parameters) {
   return new Promise((resolve, reject) => {
     // TODO: refactor queries
-    // TODO: think about moving prices array to another table
-    const query = datastore.createQuery([kind])
+    const query = datastore.createQuery([KIND])
     if (parameters.symbol) {
       // `IN` operators are currently not supported in filter function.
       // So, you can search only by one symbol now.
@@ -19,7 +19,7 @@ function list(token, parameters) {
         reject(error)
       }
       // TODO: move date filter to the query
-      // TODO: Add validation on dates requests
+      // TODO: add validation on dates requests
       let startDate
       let endDate
       if (parameters.startDate) {

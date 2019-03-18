@@ -1,8 +1,8 @@
 {
-  "name": "test_task",
+  "name": "endpoint",
   "description": "Application for querying by companies and their prices",
   "version": "1.0.0",
-  "author": "Oleg",
+  "author": "Oleg Komissarov",
   "engines": {
     "node": ">=8"
   },
@@ -15,13 +15,13 @@
         "args": [
           "app.js"
         ],
-        "msg": "Test task by Oleg"
+        "msg": "endpoint"
       }
     }
   },
   "scripts": {
     "start": "node app.js",
-    "test": "mocha src/test"
+    "test": "mocha src/test/test"
   },
   "dependencies": {
     "@google-cloud/datastore": "^3.1.0",

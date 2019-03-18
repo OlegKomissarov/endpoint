@@ -1,22 +1,17 @@
-const app = require('../app')
+const app = require('../../app')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const should = chai.should()
+const config = require('./config')
 chai.use(chaiHttp)
-
-const parameters = {
-  startDate: '03.14.2019',
-  endDate: '03.18.2019',
-  symbol: 'A'
-}
 
 // TODO: Add test of parameters compliance
 describe('/GET', () => {
   it ('should GET data', done => {
     let url = '/?'
-      + 'symbol=' + parameters.symbol
-      + '&startDate=' + new Date(parameters.startDate)
-      + '&endDate=' + new Date(parameters.endDate)
+      + 'symbol=' + config.symbol
+      + '&startDate=' + new Date(config.startDate)
+      + '&endDate=' + new Date(config.endDate)
     chai.request(app)
       .get(url)
       .end((error, response) => {

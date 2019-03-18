@@ -1,5 +1,4 @@
 require('dotenv').config()
-const path = require('path')
 const express = require('express')
 const app = express()
 
@@ -11,11 +10,6 @@ const httpRequestDuration = new Prometheus.Histogram({
   labelNames: ['route'],
   buckets: [0.10, 5, 15, 50, 100, 200, 300, 400, 500]
 })
-
-app.disable('etag')
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
-app.set('trust proxy', true)
 
 app.use((request, response, next) => {
   response.locals.startTime = Date.now()
