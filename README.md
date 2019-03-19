@@ -16,8 +16,8 @@ specify project name and port there
 and then run `npm start` to launch server.
 To test it use `npm test`. To configure tests change config.json in test directory.
 
-To make this app production-ready one need to: 
- - Add validation on dates requests to avoid requests 
+To make this app production-ready one need to:
+ - Add validation on dates requests to avoid requests
  when the end date is before the start date.
  - Improve database queries.
  E.g. add date frame to the prices query and remove filter by date after getting whole list.
@@ -25,3 +25,4 @@ To make this app production-ready one need to:
  - Add other useful metrics.
  - Test receiving data on compliance with specified parameters.
  - Add querying by more precise time frame using hours and minutes.
+ - Move all messages like "App listening on port" or "Not found" to config file.
