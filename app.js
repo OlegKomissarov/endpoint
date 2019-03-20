@@ -2,10 +2,10 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const api = require('./src/api')
+const prometheus = require('prom-client')
 
-const Prometheus = require('prom-client')
-const metricsInterval = Prometheus.collectDefaultMetrics()
-const httpRequestDuration = new Prometheus.Histogram({
+const metricsInterval = prometheus.collectDefaultMetrics()
+const httpRequestDuration = new prometheus.Histogram({
   name: 'http_request_duration_ms',
   help: 'Duration of HTTP requests in ms',
   labelNames: ['route'],
